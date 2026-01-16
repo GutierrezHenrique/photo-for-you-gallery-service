@@ -40,10 +40,10 @@ export class AuthClientService {
         };
       }
 
-      throw new UnauthorizedException('Invalid token');
+      throw new UnauthorizedException('Token inválido');
     } catch (error: any) {
       if (error.response?.status === 401 || error.response?.status === 403) {
-        throw new UnauthorizedException('Invalid token');
+        throw new UnauthorizedException('Token inválido');
       }
       
       // Log para debug
@@ -54,7 +54,7 @@ export class AuthClientService {
         url: `${this.authServiceUrl}/auth/validate`,
       });
       
-      throw new UnauthorizedException('Failed to validate token');
+      throw new UnauthorizedException('Falha ao validar token');
     }
   }
 }
