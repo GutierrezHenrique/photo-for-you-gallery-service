@@ -19,6 +19,8 @@ export class CustomThrottlerGuard extends ThrottlerGuard {
   }
 
   protected async throwThrottlingException(): Promise<void> {
-    throw new ThrottlerException('Muitas requisições. Por favor, tente novamente mais tarde.');
+    throw new ThrottlerException(
+      'Muitas requisições. Por favor, tente novamente mais tarde.',
+    );
   }
 }

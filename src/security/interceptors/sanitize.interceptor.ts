@@ -16,7 +16,9 @@ export class SanitizeInterceptor implements NestInterceptor {
 
     // Validate request payload size (10MB max)
     if (request.body && !validatePayloadSize(request.body, 10 * 1024 * 1024)) {
-      throw new PayloadTooLargeException('Tamanho do payload da requisição muito grande');
+      throw new PayloadTooLargeException(
+        'Tamanho do payload da requisição muito grande',
+      );
     }
 
     return next.handle().pipe(

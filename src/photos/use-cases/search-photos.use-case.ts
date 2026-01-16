@@ -30,7 +30,9 @@ export class SearchPhotosUseCase {
 
     // Validate pagination parameters
     if (page < 1 || !Number.isInteger(page)) {
-      throw new BadRequestException('A página deve ser um número inteiro positivo');
+      throw new BadRequestException(
+        'A página deve ser um número inteiro positivo',
+      );
     }
     if (limit < 1 || limit > 100 || !Number.isInteger(limit)) {
       throw new BadRequestException('O limite deve estar entre 1 e 100');

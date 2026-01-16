@@ -35,7 +35,9 @@ export function assertValidUUID(id: string, fieldName = 'ID'): void {
  */
 export function assertValidShareToken(token: string): void {
   if (!validateShareToken(token)) {
-    throw new BadRequestException('Formato de token de compartilhamento inválido');
+    throw new BadRequestException(
+      'Formato de token de compartilhamento inválido',
+    );
   }
 }
 

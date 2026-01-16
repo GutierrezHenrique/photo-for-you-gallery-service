@@ -5,6 +5,7 @@ import { ListPhotosUseCase } from './use-cases/list-photos.use-case';
 import { GetPhotoUseCase } from './use-cases/get-photo.use-case';
 import { UpdatePhotoUseCase } from './use-cases/update-photo.use-case';
 import { DeletePhotoUseCase } from './use-cases/delete-photo.use-case';
+import { DeletePhotosUseCase } from './use-cases/delete-photos.use-case';
 import { SearchPhotosUseCase } from './use-cases/search-photos.use-case';
 import { mockPhoto } from '../../test/fixtures/photo.fixture';
 
@@ -36,6 +37,10 @@ describe('PhotosService', () => {
     execute: jest.fn(),
   };
 
+  const mockDeletePhotosUseCase = {
+    execute: jest.fn(),
+  };
+
   const mockSearchPhotosUseCase = {
     execute: jest.fn(),
   };
@@ -63,6 +68,10 @@ describe('PhotosService', () => {
         {
           provide: DeletePhotoUseCase,
           useValue: mockDeletePhotoUseCase,
+        },
+        {
+          provide: DeletePhotosUseCase,
+          useValue: mockDeletePhotosUseCase,
         },
         {
           provide: SearchPhotosUseCase,

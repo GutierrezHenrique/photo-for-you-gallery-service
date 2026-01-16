@@ -42,7 +42,9 @@ export class SearchPhotosController {
 
     // Validate parsed values
     if (isNaN(pageNum) || pageNum < 1) {
-      throw new BadRequestException('A página deve ser um número inteiro positivo');
+      throw new BadRequestException(
+        'A página deve ser um número inteiro positivo',
+      );
     }
     if (isNaN(limitNum) || limitNum < 1 || limitNum > 100) {
       throw new BadRequestException('O limite deve estar entre 1 e 100');

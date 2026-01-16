@@ -45,7 +45,7 @@ export class AuthClientService {
       if (error.response?.status === 401 || error.response?.status === 403) {
         throw new UnauthorizedException('Token inválido');
       }
-      
+
       // Log para debug
       console.error('Token validation error:', {
         status: error.response?.status,
@@ -53,7 +53,7 @@ export class AuthClientService {
         message: error.message,
         url: `${this.authServiceUrl}/auth/validate`,
       });
-      
+
       throw new UnauthorizedException('Falha ao validar token');
     }
   }
