@@ -18,6 +18,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { PhotosService } from './photos.service';
 import { CreatePhotoDto } from './dto/create-photo.dto';
 import { UpdatePhotoDto } from './dto/update-photo.dto';
+import { DeletePhotosDto } from './dto/delete-photos.dto';
 import { JwtAuthGuard } from '../security/guards/jwt-auth.guard';
 import { ConfigService } from '@nestjs/config';
 import { PhotoViewModel } from './view-models/photo.view-model';
@@ -200,6 +201,11 @@ export class PhotosController {
       createdAt: photo.createdAt,
       updatedAt: photo.updatedAt,
     });
+  }
+
+  @Delete('batch')
+  removeMany(@Request() req, @Body() deletePhotosDto: DeletePhotosDto) {
+    return this.photosService.removeMany(deletePhotosDto.ids, req.user.id);
   }
 
   @Delete(':id')
