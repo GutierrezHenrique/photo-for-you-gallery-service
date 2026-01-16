@@ -1,6 +1,6 @@
-FROM node:20-alpine
+FROM node:20-alpine3.18
 
-# Install OpenSSL and pnpm
+# Install OpenSSL 1.1 compat and pnpm
 RUN apk add --no-cache openssl1.1-compat && \
     npm install -g pnpm
 
