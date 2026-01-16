@@ -16,13 +16,28 @@ export class DeletePhotosUseCase {
       return;
     }
 
-    // Validate that all photos exist and belong to the user
-    const photos = await Promise.all(
-      ids.map((id) => this.getPhotoUseCase.execute(id, userId)),
-    );
+    // Validate each photo individually and collect only valid ones
+    const validPhotos: Array<{ id: string; photo: any }> = [];
+    const invalidIds: string[] = [];
+
+    for (const id of ids) {
+      try {
+        const photo = await this.getPhotoUseCase.execute(id, userId);
+        validPhotos.push({ id, photo });
+      } catch (error) {
+        // Photo not found or doesn't belong to user - skip it
+        console.warn(`Photo ${id} not found or access denied, skipping deletion`);
+        invalidIds.push(id);
+      }
+    }
+
+    if (validPhotos.length === 0) {
+      // No valid photos to delete
+      return;
+    }
 
     // Delete files from R2 storage
-    const deletePromises = photos.map(async (photo) => {
+    const deletePromises = validPhotos.map(async ({ photo }) => {
       const storageKey = `photos/${photo.filename}`;
       try {
         await this.storageRepository.deleteFile(storageKey);
@@ -34,7 +49,8 @@ export class DeletePhotosUseCase {
 
     await Promise.all(deletePromises);
 
-    // Delete from database
-    await this.photosRepository.deleteMany(ids);
+    // Delete from database only valid photo IDs
+    const validIds = validPhotos.map(({ id }) => id);
+    await this.photosRepository.deleteMany(validIds);
   }
 }
