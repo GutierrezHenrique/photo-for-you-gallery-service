@@ -1,7 +1,8 @@
 FROM node:20-alpine
 
-# Install pnpm
-RUN npm install -g pnpm
+# Install OpenSSL and pnpm
+RUN apk add --no-cache openssl1.1-compat && \
+    npm install -g pnpm
 
 WORKDIR /app
 
