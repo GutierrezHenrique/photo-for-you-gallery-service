@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, ForbiddenException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { GetPhotoUseCase } from './get-photo.use-case';
 import { PhotosRepository } from '../repositories/photos.repository';
 import { StorageRepository } from '../../storage/repositories/storage.repository';
@@ -26,7 +26,9 @@ export class DeletePhotosUseCase {
         validPhotos.push({ id, photo });
       } catch (error) {
         // Photo not found or doesn't belong to user - skip it
-        console.warn(`Photo ${id} not found or access denied, skipping deletion`);
+        console.warn(
+          `Photo ${id} not found or access denied, skipping deletion`,
+        );
         invalidIds.push(id);
       }
     }
